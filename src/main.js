@@ -6,12 +6,16 @@ require('./app/boot');
 
 // set up the router
 import routes from './app/routes';
+import { beforeEach, afterEach } from './app/router_events';
 
 const router = new VueRouter({
     base: __dirname,
     mode: 'history',
     routes,
 });
+
+router.beforeEach(beforeEach);
+router.afterEach(afterEach);
 
 // instantiate our application and mount it to the dom
 /* eslint-disable no-new */
