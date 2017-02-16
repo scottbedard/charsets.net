@@ -1,4 +1,4 @@
-export const beforeEach = function(route, redirect, next) {
+export const beforeEach = function (route, redirect, next) {
     next();
 };
 

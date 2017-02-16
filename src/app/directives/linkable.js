@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 Vue.directive('linkable', {
-    bind(el, binding, vnode) {
+    bind (el, binding, vnode) {
         const component = vnode.context;
 
         el.linkableClick = (e) => {
@@ -18,7 +18,7 @@ Vue.directive('linkable', {
 
         el.addEventListener('click', el.linkableClick);
     },
-    unbind(el) {
+    unbind (el) {
         el.removeEventListener('click', el.linkableClick);
     },
 });
