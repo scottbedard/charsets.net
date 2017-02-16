@@ -2,6 +2,7 @@ var baseWebpackConfig = require('./webpack.base.conf');
 var config = require('../config');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var merge = require('webpack-merge');
 var path = require('path');
 var utils = require('./utils');
@@ -29,6 +30,13 @@ var webpackConfig = merge(baseWebpackConfig, {
         new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }}),
         // extract css into its own file
         new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
+        // minify our css
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            canPrint: true,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: { discardComments: { removeAll: true }},
+        }),
         new HtmlWebpackPlugin({
             chunksSortMode: 'dependency',
             filename: path.resolve(__dirname, '../pages/index.htm'),
