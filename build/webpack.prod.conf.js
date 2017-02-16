@@ -33,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         // minify our css
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
-            canPrint: true,
+            canPrint: false,
             cssProcessor: require('cssnano'),
             cssProcessorOptions: { discardComments: { removeAll: true }},
         }),
