@@ -72,7 +72,7 @@ app.use(staticPath, express.static('./static'));
 
 // browser sync
 browserSync({
-    proxy: 'https://charsets.net',
+    proxy: 'http://charsets.dev',
     open: false,
     middleware: [
         devMiddleware,
