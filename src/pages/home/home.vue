@@ -13,6 +13,7 @@
         </header>
         <v-output></v-output>
         <v-controls></v-controls>
+        <v-links></v-links>
     </div>
 </template>
 
@@ -20,6 +21,7 @@
     export default {
         components: {
             'v-controls': require('./controls/controls'),
+            'v-links': require('./links/links'),
             'v-output': require('./output/output'),
         },
     };

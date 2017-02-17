@@ -1,3 +1,5 @@
 # charsets.net
 
-Random character generator
+https://charsets.net
+
+The simplest random character generator around.
