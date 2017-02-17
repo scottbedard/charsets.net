@@ -30,10 +30,10 @@
                 <label for="length">Length</label>
                 <v-input
                     id="length"
-                    max="100"
                     min="1"
                     ref="length"
                     type="number"
+                    :max="limits.length"
                     @input="onLengthInput"
                 />
             </div>
@@ -41,10 +41,10 @@
                 <label for="quantity">Quantity</label>
                 <v-input
                     id="quantity"
-                    max="100"
                     min="1"
                     ref="quantity"
                     type="number"
+                    :max="limits.quantity"
                     @input="onQuantityInput"
                 />
             </div>
@@ -93,6 +93,11 @@
     export default {
         mounted () {
             Object.keys(defaults).forEach(this.setInitialValue);
+        },
+        computed: {
+            limits () {
+                return limits;
+            },
         },
         methods: {
             navigate (options) {
