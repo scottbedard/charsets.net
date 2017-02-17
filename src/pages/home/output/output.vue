@@ -26,7 +26,9 @@
     <div class="v-output">
         <div class="error" v-if="! characters.length">No character sets are selected.</div>
         <div class="error" v-else-if="quantity <= 0">Set the quantity to a number greater than zero.</div>
+        <div class="error" v-else-if="quantity > limits.quantity">The maximum quantity is {{ limits.quantity }}.</div>
         <div class="error" v-else-if="length <= 0">Set the string length to a number greater than zero.</div>
+        <div class="error" v-else-if="length > limits.length">The maximum length is {{ limits.length }}.</div>
         <div class="strings" v-else>
             <div v-for="string in strings">
                 {{ string }}
@@ -36,7 +38,7 @@
 </template>
 
 <script>
-    import defaultValues from 'src/app/defaults';
+    import { defaults, limits } from 'src/app/settings';
     import { convertToBoolean } from 'src/app/utilities/conversion';
 
     let sets = {
@@ -63,14 +65,17 @@
                     return Number(this.$route.query.length);
                 }
 
-                return defaultValues.length;
+                return defaults.length;
+            },
+            limits () {
+                return limits;
             },
             quantity () {
                 if (typeof this.$route.query.quantity !== 'undefined') {
                     return Number(this.$route.query.quantity);
                 }
 
-                return defaultValues.quantity;
+                return defaults.quantity;
             },
             strings () {
                 let strings = [];
@@ -88,19 +93,19 @@
             },
             useLowercase () {
                 return (typeof this.$route.query.lowercase !== 'undefined' && convertToBoolean(this.$route.query.lowercase))
-                    || (typeof this.$route.query.lowercase === 'undefined' && defaultValues.lowercase);
+                    || (typeof this.$route.query.lowercase === 'undefined' && defaults.lowercase);
             },
             useNumbers () {
                 return (typeof this.$route.query.numbers !== 'undefined' && convertToBoolean(this.$route.query.numbers))
-                    || (typeof this.$route.query.numbers === 'undefined' && defaultValues.numbers);
+                    || (typeof this.$route.query.numbers === 'undefined' && defaults.numbers);
             },
             useSymbols () {
                 return (typeof this.$route.query.symbols !== 'undefined' && convertToBoolean(this.$route.query.symbols))
-                    || (typeof this.$route.query.symbols === 'undefined' && defaultValues.symbols);
+                    || (typeof this.$route.query.symbols === 'undefined' && defaults.symbols);
             },
             useUppercase () {
                 return (typeof this.$route.query.uppercase !== 'undefined' && convertToBoolean(this.$route.query.uppercase))
-                    || (typeof this.$route.query.uppercase === 'undefined' && defaultValues.uppercase);
+                    || (typeof this.$route.query.uppercase === 'undefined' && defaults.uppercase);
             },
         },
     };

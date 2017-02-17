@@ -87,12 +87,12 @@
 </template>
 
 <script>
-    import defaultValues from 'src/app/defaults';
+    import { defaults, limits } from 'src/app/settings';
     import { convertToBoolean } from 'src/app/utilities/conversion';
 
     export default {
         mounted () {
-            Object.keys(defaultValues).forEach(this.setInitialValue);
+            Object.keys(defaults).forEach(this.setInitialValue);
         },
         methods: {
             navigate (options) {
@@ -126,7 +126,7 @@
                 let { query } = this.$route;
 
                 let value = typeof query[key] === 'undefined'
-                    ? defaultValues[key]
+                    ? defaults[key]
                     : query[key];
 
                 if (['uppercase', 'lowercase'].indexOf(key) > -1) {
