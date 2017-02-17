@@ -41,7 +41,7 @@
                 <label for="quantity">Quantity</label>
                 <v-input
                     id="quantity"
-                    max="20"
+                    max="100"
                     min="1"
                     ref="quantity"
                     type="number"
