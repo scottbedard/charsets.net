@@ -1,11 +1,12 @@
 <style lang="scss" scoped>@import 'core';
-    .v-options {
+    .row {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
 
         > div {
             margin: 12px;
-            text-align: left;
+            text-align: center;
 
             label {
                 display: block;
@@ -16,6 +17,7 @@
 
             input {
                 min-width: 100px;
+                text-align: center;
             }
         }
     }
@@ -23,40 +25,70 @@
 
 <template>
     <div class="v-options">
-        <div>
-            <label for="length">Length</label>
-            <v-input
-                id="length"
-                max="100"
-                min="1"
-                ref="length"
-                type="number"
-                @input="onLengthInput"
-            />
+        <div class="row">
+            <div>
+                <label for="length">Length</label>
+                <v-input
+                    id="length"
+                    max="100"
+                    min="1"
+                    ref="length"
+                    type="number"
+                    @input="onLengthInput"
+                />
+            </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <v-input
+                    id="quantity"
+                    max="20"
+                    min="1"
+                    ref="quantity"
+                    type="number"
+                    @input="onQuantityInput"
+                />
+            </div>
         </div>
-        <div>
-            <label for="quantity">Quantity</label>
-            <v-input
-                id="quantity"
-                max="20"
-                min="1"
-                ref="quantity"
-                type="number"
-                @input="onQuantityInput"
-            />
+        <div class="row">
+            <div>
+                <label for="lowercase">Lowercase</label>
+                <v-checkbox
+                    id="lowercase"
+                    ref="lowercase"
+                    @input="onLowercaseChanged"
+                />
+            </div>
+            <div>
+                <label for="uppercase">Uppercase</label>
+                <v-checkbox
+                    id="uppercase"
+                    ref="uppercase"
+                    @input="onUppercaseChanged"
+                />
+            </div>
+            <div>
+                <label for="numbers">Numbers</label>
+                <v-checkbox
+                    id="numbers"
+                    ref="numbers"
+                    @input="onNumbersChanged"
+                />
+            </div>
+            <div>
+                <label for="symbols">Symbols</label>
+                <v-checkbox
+                    id="symbols"
+                    ref="symbols"
+                    @input="onSymbolsChanged"
+                />
+            </div>
         </div>
-        <div>
-            <label for="lowercase">Lowercase letters</label>
-            <v-checkbox
-                id="lowercase"
-                ref="lowercase"
-                @input="onLowercaseChanged"
-            />
     </div>
 </template>
 
 <script>
     import defaultValues from 'src/app/defaults';
+    import { convertToBoolean } from 'src/app/utilities/conversion';
 
     export default {
         mounted () {
@@ -78,14 +110,28 @@
             onLowercaseChanged (lowercase) {
                 this.navigate({ lowercase });
             },
+            onNumbersChanged (numbers) {
+                this.navigate({ numbers });
+            },
             onQuantityInput (quantity) {
                 this.navigate({ quantity });
             },
+            onSymbolsChanged (symbols) {
+                this.navigate({ symbols });
+            },
+            onUppercaseChanged (uppercase) {
+                this.navigate({ uppercase });
+            },
             setInitialValue (key) {
-                const { query } = this.$route;
-                const value = typeof query[key] === 'undefined'
+                let { query } = this.$route;
+
+                let value = typeof query[key] === 'undefined'
                     ? defaultValues[key]
                     : query[key];
+
+                if (['uppercase', 'lowercase'].indexOf(key) > -1) {
+                    value = convertToBoolean(value);
+                }
 
                 this.$refs[key].setValue(value);
             },
